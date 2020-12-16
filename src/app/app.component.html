@@ -1,25 +1,18 @@
-<div *ngFor="let part of parts | async">
-   {{ part | json }}
-</div>
 
 <table mat-table [dataSource]="parts | async" class="mat-elevation-z8">
 
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
+  
 
-  <!-- Position Column -->
   <ng-container matColumnDef="part_nr">
     <th mat-header-cell *matHeaderCellDef> part_nr </th>
     <td mat-cell *matCellDef="let parts"> {{parts.part_nr}} </td>
   </ng-container>
 
-  <!-- Name Column -->
   <ng-container matColumnDef="part_description_fr">
     <th mat-header-cell *matHeaderCellDef> part_description_fr </th>
     <td mat-cell *matCellDef="let parts"> {{parts.part_description_fr}} </td>
   </ng-container>
 
-  <!-- Weight Column -->
   <ng-container matColumnDef="part_description_en">
     <th mat-header-cell *matHeaderCellDef> part_description_en </th>
     <td mat-cell *matCellDef="let parts"> {{parts.part_description_en}} </td>
