@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatTableModule} from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
+import { AccessForbiddenComponent } from './access-forbidden/access-forbidden.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AccessForbiddenComponent
   ],
   imports: [
     BrowserModule,
