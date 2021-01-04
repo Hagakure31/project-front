@@ -1,0 +1,61 @@
+<table mat-table [dataSource]="tableData | async" class="mat-elevation-z8">
+  <ng-container matColumnDef="ecu_name">
+    <th mat-header-cell *matHeaderCellDef>ecu_name</th>
+    <td mat-cell *matCellDef="let tableData">{{ tableData.ecu_name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="config_diagitem">
+    <th mat-header-cell *matHeaderCellDef>config_diagitem</th>
+    <td mat-cell *matCellDef="let tableData">
+      {{ tableData.config_diagitem }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="option_valuewrite">
+    <th mat-header-cell *matHeaderCellDef>option_valuewrite</th>
+    <td mat-cell *matCellDef="let tableData">
+      {{ tableData.option_valuewrite }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="option_text">
+    <th mat-header-cell *matHeaderCellDef>Option_text</th>
+    <td mat-cell *matCellDef="let tableData">{{ tableData.option_text }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="royalty_part_nr">
+    <th mat-header-cell *matHeaderCellDef>royalty_part_nr</th>
+    <td mat-cell *matCellDef="let tableData">
+      {{ tableData.royalty_part_nr }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="part_description_fr">
+    <th mat-header-cell *matHeaderCellDef>part_description_fr</th>
+    <td mat-cell *matCellDef="let tableData">
+      {{ tableData.part_description_fr }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="part_description_en">
+    <th mat-header-cell *matHeaderCellDef>part_description_fr</th>
+    <td mat-cell *matCellDef="let tableData">
+      {{ tableData.part_description_fr }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="royalty_mtc_scr">
+    <th mat-header-cell *matHeaderCellDef>royalty_mtc_scr</th>
+    <td mat-cell *matCellDef="let tableData">
+      {{ tableData.royalty_mtc_scr }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="comment">
+    <th mat-header-cell *matHeaderCellDef>Comment</th>
+    <td mat-cell *matCellDef="let tableData">{{ tableData.comment }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
