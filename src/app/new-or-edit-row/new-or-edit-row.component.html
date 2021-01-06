@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Hi</h1>
+
+<div [formGroup]="form" mat-dialog-content>
+  <p>What's your favorite animal?</p>
+  <mat-form-field>
+    <mat-label>ecu-name</mat-label>
+    <input formControlName="ecu_name" [matAutocomplete]="auto" matInput />
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredOptions | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('ecu_name').hasError('required')"
+      >Veuillez remplir le champ</mat-error
+    >
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close] cdkFocusInitial>Ok</button>
+</div>
