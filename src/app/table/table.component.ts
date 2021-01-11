@@ -20,11 +20,6 @@ export class TableComponent implements OnInit {
     'part_description_en',
     'royalty_mtc_scr',
     'comment',
-    // 'symbol',
-    // 'data5',
-    // 'data6',
-    // 'data7',
-    // 'data8',
   ];
 
   constructor(private tableDataService: TableDataService) {}

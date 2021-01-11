@@ -13,6 +13,5 @@ export class PartService {
   constructor(private http: HttpClient) {}
   getParts(): Observable<Part[]> {
     return this.http.get<Part[]>(this.apiUrl);
-
   }
 }

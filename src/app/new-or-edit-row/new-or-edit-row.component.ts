@@ -15,9 +15,50 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class NewOrEditRowComponent implements OnInit {
   options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions: Observable<string[]>;
+  filteredOptionsEcu: Observable<string[]>;
+  filteredOptionsConfigDiagitems: Observable<string[]>;
+  filteredOptionsOptionValuewrite: Observable<string[]>;
+  filteredOptionsOptionText: Observable<string[]>;
+  filteredOptionsRoyaltyPartnr: Observable<string[]>;
+  filteredOptionsDescriptionFr: Observable<string[]>;
+  filteredOptionsDescriptionEn: Observable<string[]>;
+  filteredOptionsRoyaltyMtcScr: Observable<string[]>;
+  filteredOptionsComment: Observable<string[]>;
+
   form: FormGroup = new FormGroup({
     ecu_name: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+    ]),
+    config_diagitem: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+    ]),
+    option_valuewrite: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+    ]),
+    Option_text: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+    ]),
+    royalty_part_nr: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+    ]),
+    part_description_fr: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+    ]),
+    part_description_en: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+    ]),
+    royalty_mtc_scr: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+    ]),
+    Comment: new FormControl('', [
       Validators.required,
       Validators.maxLength(30),
     ]),
@@ -25,19 +66,56 @@ export class NewOrEditRowComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<NewOrEditRowComponent>) {}
 
-  ngOnInit() {
-    this.filteredOptions = this.form.get('ecu_name').valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filter(value))
+  private _filter(value: string, options: string[]): string[] {
+    const filterValue = value.toLowerCase();
+
+    return options.filter(
+      (option) => option.toLowerCase().indexOf(filterValue) === 0
     );
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(
-      (option) => option.toLowerCase().indexOf(filterValue) === 0
+  private optionsSorter(
+    field: string,
+    options: string[]
+  ): Observable<string[]> {
+    return this.form.get(field).valueChanges.pipe(
+      startWith(''),
+      map((value: string) => this._filter(value, options))
     );
+  }
+
+  ngOnInit() {
+    this.filteredOptionsEcu = this.optionsSorter('ecu_name', this.options);
+    this.filteredOptionsConfigDiagitems = this.optionsSorter(
+      'config_diagitem',
+      this.options
+    );
+    this.filteredOptionsOptionValuewrite = this.optionsSorter(
+      'option_valuewrite',
+      this.options
+    );
+    (this.filteredOptionsOptionText = this.optionsSorter(
+      'Option_text',
+      this.options
+    )),
+      this.options;
+    this.filteredOptionsRoyaltyPartnr = this.optionsSorter(
+      'royalty_part_nr',
+      this.options
+    );
+    this.filteredOptionsDescriptionFr = this.optionsSorter(
+      'part_description_fr',
+      this.options
+    );
+    this.filteredOptionsDescriptionEn = this.optionsSorter(
+      'part_description_en',
+      this.options
+    );
+    this.filteredOptionsRoyaltyMtcScr = this.optionsSorter(
+      'royalty_mtc_scr',
+      this.options
+    );
+    this.filteredOptionsComment = this.optionsSorter('Comment', this.options);
   }
 
   onNoClick(): void {

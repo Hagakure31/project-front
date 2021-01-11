@@ -1,24 +1,205 @@
-<h1 mat-dialog-title>Hi</h1>
+<h1 mat-dialog-title>Ajouter des références</h1>
 
 <div [formGroup]="form" mat-dialog-content>
-  <p>What's your favorite animal?</p>
+  <p>Saisir ecu-name</p>
   <mat-form-field>
     <mat-label>ecu-name</mat-label>
-    <input formControlName="ecu_name" [matAutocomplete]="auto" matInput />
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <input formControlName="ecu_name" [matAutocomplete]="autoEcu" matInput />
+    <mat-autocomplete autoActiveFirstOption #autoEcu="matAutocomplete">
       <mat-option
-        *ngFor="let option of filteredOptions | async"
+        *ngFor="let option of filteredOptionsEcu | async"
         [value]="option"
       >
         {{ option }}
       </mat-option>
     </mat-autocomplete>
     <mat-error *ngIf="form.get('ecu_name').hasError('required')"
-      >Veuillez remplir le champ</mat-error
+      >Veuillez remplir le champ ecu_name</mat-error
+    >
+  </mat-form-field>
+
+  <p>Saisir config_diagitem</p>
+  <mat-form-field>
+    <mat-label>config_diagitem</mat-label>
+    <input
+      formControlName="config_diagitem"
+      [matAutocomplete]="autoDiagItem"
+      matInput
+    />
+    <mat-autocomplete autoActiveFirstOption #autoDiagItem="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredOptionsConfigDiagitems | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('config_diagitem').hasError('required')"
+      >Veuillez remplir le champ config_diagitem</mat-error
+    >
+  </mat-form-field>
+
+  <p>Saisir option_valuewrite</p>
+  <mat-form-field>
+    <mat-label>option_valuewrite</mat-label>
+    <input
+      formControlName="option_valuewrite"
+      [matAutocomplete]="autoValueWrite"
+      matInput
+    />
+    <mat-autocomplete autoActiveFirstOption #autoValueWrite="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredOptionsOptionValuewrite | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('option_valuewrite').hasError('required')"
+      >Veuillez remplir le champ option_valuewrite</mat-error
+    >
+  </mat-form-field>
+
+  <p>Saisir Option_text</p>
+  <mat-form-field>
+    <mat-label>Option_text</mat-label>
+    <input
+      formControlName="Option_text"
+      [matAutocomplete]="autoOptionText"
+      matInput
+    />
+    <mat-autocomplete autoActiveFirstOption #autoOptionText="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredOptionsOptionText | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('Option_text').hasError('required')"
+      >Veuillez remplir le champ Option_text</mat-error
+    >
+  </mat-form-field>
+
+  <p>Saisir royalty_part_nr</p>
+  <mat-form-field>
+    <mat-label>royalty_part_nr</mat-label>
+    <input
+      formControlName="royalty_part_nr"
+      [matAutocomplete]="autoPartNr"
+      matInput
+    />
+    <mat-autocomplete autoActiveFirstOption #autoPartNr="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredOptionsRoyaltyPartnr | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('royalty_part_nr').hasError('required')"
+      >Veuillez remplir le champ royalty_part_nr</mat-error
+    >
+  </mat-form-field>
+
+  <p>Saisir part_description_fr</p>
+  <mat-form-field>
+    <mat-label>part_description_fr</mat-label>
+    <input
+      formControlName="part_description_fr"
+      [matAutocomplete]="autoFr"
+      matInput
+    />
+    <mat-autocomplete autoActiveFirstOption #autoFr="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredOptionsDescriptionFr | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('part_description_fr').hasError('required')"
+      >Veuillez remplir le champ part_description_fr</mat-error
+    >
+  </mat-form-field>
+
+  <p>Saisir part_description_en</p>
+  <mat-form-field>
+    <mat-label>part_description_en</mat-label>
+    <input
+      formControlName="part_description_en"
+      [matAutocomplete]="autoEn"
+      matInput
+    />
+    <mat-autocomplete autoActiveFirstOption #autoEn="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredOptionsDescriptionEn | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('part_description_en').hasError('required')"
+      >Veuillez remplir le champ part_description_en</mat-error
+    >
+  </mat-form-field>
+
+  <p>Saisir royalty_mtc_scr</p>
+  <mat-form-field>
+    <mat-label>royalty_mtc_scr</mat-label>
+    <input
+      formControlName="royalty_mtc_scr"
+      [matAutocomplete]="autoRoyaltyMtcScr"
+      matInput
+    />
+    <mat-autocomplete
+      autoActiveFirstOption
+      #autoRoyaltyMtcScr="matAutocomplete"
+    >
+      <mat-option
+        *ngFor="let option of filteredOptionsRoyaltyMtcScr | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('royalty_mtc_scr').hasError('required')"
+      >Veuillez remplir le champ royalty_mtc_scr</mat-error
+    >
+  </mat-form-field>
+
+  <p>Saisir Comment</p>
+  <mat-form-field>
+    <mat-label>Comment</mat-label>
+    <input formControlName="Comment" [matAutocomplete]="autoComment" matInput />
+    <mat-autocomplete autoActiveFirstOption #autoComment="matAutocomplete">
+      <mat-option
+        *ngFor="let option of filteredOptionsComment | async"
+        [value]="option"
+      >
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('Comment').hasError('required')"
+      >Veuillez remplir le champ Comment</mat-error
     >
   </mat-form-field>
 </div>
+
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
   <button mat-button [mat-dialog-close] cdkFocusInitial>Ok</button>
 </div>
+
+<!-- <mat-form-field>
+  <mat-label>config_diagitem</mat-label>
+  <input formControlName="config_diagitem" [matAutocomplete]="auto" matInput />
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+      {{ option }}
+    </mat-option>
+  </mat-autocomplete>
+  <mat-error *ngIf="form.get('config_diagitem').hasError('required')"
+    >Veuillez remplir le champ config_diagitem</mat-error
+  >
+</mat-form-field> -->
