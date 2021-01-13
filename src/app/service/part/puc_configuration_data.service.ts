@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Puc_Configuration_Data } from 'src/puc_configuration_data';
 
@@ -18,5 +19,10 @@ export class PucConfigurationDataService {
 
   getEcuNames(): Observable<string[]> {
     return this.http.get<string[]>(this.apiEcuNames);
+    // .pipe(
+    //   map((ecu_names: string[]) => {
+    //     return ecu_names;
+    //   })
+    // );
   }
 }

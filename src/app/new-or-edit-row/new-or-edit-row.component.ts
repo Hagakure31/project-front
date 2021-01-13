@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import {
   MatDialog,
   MatDialogRef,
@@ -7,6 +8,7 @@ import {
 } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { PucConfigurationDataService } from '../service/part/puc_configuration_data.service';
 
 @Component({
   selector: 'app-new-or-edit-row',
@@ -24,6 +26,8 @@ export class NewOrEditRowComponent implements OnInit {
   filteredOptionsDescriptionEn: Observable<string[]>;
   filteredOptionsRoyaltyMtcScr: Observable<string[]>;
   filteredOptionsComment: Observable<string[]>;
+
+  ecu_names$: Observable<string[]>;
 
   form: FormGroup = new FormGroup({
     ecu_name: new FormControl('', [
@@ -64,7 +68,10 @@ export class NewOrEditRowComponent implements OnInit {
     ]),
   });
 
-  constructor(public dialogRef: MatDialogRef<NewOrEditRowComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<NewOrEditRowComponent>,
+    private pucConfigurationDataService: PucConfigurationDataService
+  ) {}
 
   private _filter(value: string, options: string[]): string[] {
     const filterValue = value.toLowerCase();
@@ -72,6 +79,10 @@ export class NewOrEditRowComponent implements OnInit {
     return options.filter(
       (option) => option.toLowerCase().indexOf(filterValue) === 0
     );
+  }
+
+  public onEcuNameSelected(event: MatAutocompleteSelectedEvent) {
+    console.log(event.option.value);
   }
 
   private optionsSorter(
@@ -85,7 +96,10 @@ export class NewOrEditRowComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.filteredOptionsEcu = this.optionsSorter('ecu_name', this.options);
+    this.pucConfigurationDataService.getEcuNames().subscribe((options) => {
+      this.filteredOptionsEcu = this.optionsSorter('ecu_name', options);
+    });
+
     this.filteredOptionsConfigDiagitems = this.optionsSorter(
       'config_diagitem',
       this.options

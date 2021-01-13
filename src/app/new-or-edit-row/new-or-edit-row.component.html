@@ -5,7 +5,11 @@
   <mat-form-field>
     <mat-label>ecu-name</mat-label>
     <input formControlName="ecu_name" [matAutocomplete]="autoEcu" matInput />
-    <mat-autocomplete autoActiveFirstOption #autoEcu="matAutocomplete">
+    <mat-autocomplete
+      autoActiveFirstOption
+      #autoEcu="matAutocomplete"
+      (optionSelected)="onEcuNameSelected($event)"
+    >
       <mat-option
         *ngFor="let option of filteredOptionsEcu | async"
         [value]="option"
