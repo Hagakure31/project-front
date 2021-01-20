@@ -83,6 +83,14 @@ export class NewOrEditRowComponent implements OnInit {
 
   public onEcuNameSelected(event: MatAutocompleteSelectedEvent) {
     console.log(event.option.value);
+    this.pucConfigurationDataService
+      .getConfigDiagitems(event.option.value)
+      .subscribe((options) => {
+        this.filteredOptionsConfigDiagitems = this.optionsSorter(
+          'config_diagitem',
+          options
+        );
+      });
   }
 
   private optionsSorter(
@@ -100,10 +108,10 @@ export class NewOrEditRowComponent implements OnInit {
       this.filteredOptionsEcu = this.optionsSorter('ecu_name', options);
     });
 
-    this.filteredOptionsConfigDiagitems = this.optionsSorter(
-      'config_diagitem',
-      this.options
-    );
+    // this.filteredOptionsConfigDiagitems = this.optionsSorter(
+    //   'config_diagitem',
+    //   this.options
+    // );
     this.filteredOptionsOptionValuewrite = this.optionsSorter(
       'option_valuewrite',
       this.options

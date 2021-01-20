@@ -11,6 +11,7 @@ import { Puc_Configuration_Data } from 'src/puc_configuration_data';
 export class PucConfigurationDataService {
   apiUrl = environment.url + '/puc_configuration_data/';
   apiEcuNames = this.apiUrl + 'ecu_names/';
+  apiConfigDiagitems = this.apiUrl + 'config_diagitems/';
 
   constructor(private http: HttpClient) {}
   getPucConfigurationData(): Observable<Puc_Configuration_Data[]> {
@@ -19,10 +20,13 @@ export class PucConfigurationDataService {
 
   getEcuNames(): Observable<string[]> {
     return this.http.get<string[]>(this.apiEcuNames);
-    // .pipe(
-    //   map((ecu_names: string[]) => {
-    //     return ecu_names;
-    //   })
-    // );
   }
+
+  getConfigDiagitems(selectedEcu): Observable<string[]> {
+    return this.http.get<string[]>(this.apiConfigDiagitems + selectedEcu);
+  }
+
+  // getConfigDiagitems(selectedEcu): Observable<string[]> {
+  //   return this.http.get<string[]>(this.)
+  // }
 }
