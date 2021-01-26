@@ -28,6 +28,11 @@ export class NewOrEditRowComponent implements OnInit {
   filteredOptionsComment: Observable<string[]>;
 
   ecu_names$: Observable<string[]>;
+  previousState: any = {
+    ecu_name: '',
+    config_diagitem: '',
+    option_valuewrite: '',
+  };
 
   form: FormGroup = new FormGroup({
     ecu_name: new FormControl('', [
@@ -83,11 +88,34 @@ export class NewOrEditRowComponent implements OnInit {
 
   public onEcuNameSelected(event: MatAutocompleteSelectedEvent) {
     console.log(event.option.value);
+    if (event.option.value === this.previousState.ecu_name) {
+      return;
+    }
+    this.previousState.ecu_name = event.option.value;
     this.pucConfigurationDataService
       .getConfigDiagitems(event.option.value)
       .subscribe((options) => {
         this.filteredOptionsConfigDiagitems = this.optionsSorter(
           'config_diagitem',
+          options
+        );
+      });
+  }
+
+  public onConfigDiagitemSelected(
+    event: MatAutocompleteSelectedEvent,
+    selectedEcu: string
+  ) {
+    console.log(event, selectedEcu);
+    if (event.option.value === this.previousState.config_diagitem) {
+      return;
+    }
+    this.previousState.config_diagitem = event.option.value;
+    this.pucConfigurationDataService
+      .getOptionValuewrite(selectedEcu, event.option.value)
+      .subscribe((options) => {
+        this.filteredOptionsOptionValuewrite = this.optionsSorter(
+          'option_valuewrite',
           options
         );
       });
@@ -112,10 +140,10 @@ export class NewOrEditRowComponent implements OnInit {
     //   'config_diagitem',
     //   this.options
     // );
-    this.filteredOptionsOptionValuewrite = this.optionsSorter(
-      'option_valuewrite',
-      this.options
-    );
+    // this.filteredOptionsOptionValuewrite = this.optionsSorter(
+    //   'option_valuewrite',
+    //   this.options
+    // );
     (this.filteredOptionsOptionText = this.optionsSorter(
       'Option_text',
       this.options

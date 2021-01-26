@@ -1,7 +1,6 @@
 <h1 mat-dialog-title>Ajouter des références</h1>
 
 <div [formGroup]="form" mat-dialog-content>
-  <p>Saisir ecu-name</p>
   <mat-form-field>
     <mat-label>ecu-name</mat-label>
     <input formControlName="ecu_name" [matAutocomplete]="autoEcu" matInput />
@@ -22,7 +21,7 @@
     >
   </mat-form-field>
 
-  <p>Saisir config_diagitem</p>
+  <br />
   <mat-form-field>
     <mat-label>config_diagitem</mat-label>
     <input
@@ -30,7 +29,13 @@
       [matAutocomplete]="autoDiagItem"
       matInput
     />
-    <mat-autocomplete autoActiveFirstOption #autoDiagItem="matAutocomplete">
+    <mat-autocomplete
+      autoActiveFirstOption
+      #autoDiagItem="matAutocomplete"
+      (optionSelected)="
+        onConfigDiagitemSelected($event, form.get('ecu_name').value)
+      "
+    >
       <mat-option
         *ngFor="let option of filteredOptionsConfigDiagitems | async"
         [value]="option"
@@ -43,7 +48,7 @@
     >
   </mat-form-field>
 
-  <p>Saisir option_valuewrite</p>
+  <br />
   <mat-form-field>
     <mat-label>option_valuewrite</mat-label>
     <input
@@ -64,13 +69,14 @@
     >
   </mat-form-field>
 
-  <p>Saisir Option_text</p>
+  <br />
   <mat-form-field>
-    <mat-label>Option_text</mat-label>
+    <mat-label>option_text</mat-label>
     <input
       formControlName="Option_text"
       [matAutocomplete]="autoOptionText"
       matInput
+    />
     />
     <mat-autocomplete autoActiveFirstOption #autoOptionText="matAutocomplete">
       <mat-option
@@ -85,7 +91,7 @@
     >
   </mat-form-field>
 
-  <p>Saisir royalty_part_nr</p>
+  <br />
   <mat-form-field>
     <mat-label>royalty_part_nr</mat-label>
     <input
@@ -106,7 +112,7 @@
     >
   </mat-form-field>
 
-  <p>Saisir part_description_fr</p>
+  <br />
   <mat-form-field>
     <mat-label>part_description_fr</mat-label>
     <input
@@ -127,7 +133,7 @@
     >
   </mat-form-field>
 
-  <p>Saisir part_description_en</p>
+  <br />
   <mat-form-field>
     <mat-label>part_description_en</mat-label>
     <input
@@ -148,7 +154,7 @@
     >
   </mat-form-field>
 
-  <p>Saisir royalty_mtc_scr</p>
+  <br />
   <mat-form-field>
     <mat-label>royalty_mtc_scr</mat-label>
     <input
@@ -172,7 +178,7 @@
     >
   </mat-form-field>
 
-  <p>Saisir Comment</p>
+  <br />
   <mat-form-field>
     <mat-label>Comment</mat-label>
     <input formControlName="Comment" [matAutocomplete]="autoComment" matInput />
