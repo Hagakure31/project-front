@@ -9,6 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { PucConfigurationDataService } from '../service/part/puc_configuration_data.service';
+import { PartService } from '../service/part/part.service';
 
 @Component({
   selector: 'app-new-or-edit-row',
@@ -34,6 +35,12 @@ export class NewOrEditRowComponent implements OnInit {
     option_valuewrite: '',
   };
 
+  partPreviousState: any = {
+    royalty_part_nr: '',
+    part_description_fr: '',
+    part_description_en: '',
+  };
+
   form: FormGroup = new FormGroup({
     ecu_name: new FormControl('', [
       Validators.required,
@@ -47,7 +54,7 @@ export class NewOrEditRowComponent implements OnInit {
       Validators.required,
       Validators.maxLength(30),
     ]),
-    Option_text: new FormControl('', [
+    Option_text: new FormControl({ value: '', disabled: true }, [
       Validators.required,
       Validators.maxLength(30),
     ]),
@@ -55,15 +62,15 @@ export class NewOrEditRowComponent implements OnInit {
       Validators.required,
       Validators.maxLength(30),
     ]),
-    part_description_fr: new FormControl('', [
+    part_description_fr: new FormControl({ value: '', disabled: true }, [
       Validators.required,
       Validators.maxLength(30),
     ]),
-    part_description_en: new FormControl('', [
+    part_description_en: new FormControl({ value: '', disabled: true }, [
       Validators.required,
       Validators.maxLength(30),
     ]),
-    royalty_mtc_scr: new FormControl('', [
+    royalty_mtc_scr: new FormControl({ value: '.', disabled: true }, [
       Validators.required,
       Validators.maxLength(30),
     ]),
@@ -75,7 +82,8 @@ export class NewOrEditRowComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<NewOrEditRowComponent>,
-    private pucConfigurationDataService: PucConfigurationDataService
+    private pucConfigurationDataService: PucConfigurationDataService,
+    private partService: PartService
   ) {}
 
   private _filter(value: string, options: string[]): string[] {
@@ -87,7 +95,6 @@ export class NewOrEditRowComponent implements OnInit {
   }
 
   public onEcuNameSelected(event: MatAutocompleteSelectedEvent) {
-    console.log(event.option.value);
     if (event.option.value === this.previousState.ecu_name) {
       return;
     }
@@ -106,7 +113,6 @@ export class NewOrEditRowComponent implements OnInit {
     event: MatAutocompleteSelectedEvent,
     selectedEcu: string
   ) {
-    console.log(event, selectedEcu);
     if (event.option.value === this.previousState.config_diagitem) {
       return;
     }
@@ -118,6 +124,38 @@ export class NewOrEditRowComponent implements OnInit {
           'option_valuewrite',
           options
         );
+      });
+  }
+
+  public onOptionValuewriteSelected(
+    event: MatAutocompleteSelectedEvent,
+    selectedEcu: string,
+    selectedConfigDiagitem: string
+  ) {
+    // console.log(event, selectedEcu, selectedConfigDiagitem);
+    if (event.option.value === this.previousState.option_valuewrite) {
+      return;
+    }
+    this.previousState.option_valuewrite = event.option.value;
+
+    this.pucConfigurationDataService
+      .getOptionText(selectedEcu, selectedConfigDiagitem, event.option.value)
+      .subscribe((response) => {
+        this.form.get('Option_text').setValue(response.selectedOptionText);
+      });
+  }
+
+  public onRoyaltyPartNrSelected(event: MatAutocompleteSelectedEvent) {
+    if (event.option.value === this.partPreviousState.royalty_part_nr) {
+      return;
+    }
+
+    this.partPreviousState.royalty_part_nr = event.option.value;
+    this.partService
+      .getPartDescriptions(event.option.value)
+      .subscribe((response) => {
+        this.form.get('part_description_fr').setValue(response.descriptionFr);
+        this.form.get('part_description_en').setValue(response.descriptionEn);
       });
   }
 
@@ -136,36 +174,12 @@ export class NewOrEditRowComponent implements OnInit {
       this.filteredOptionsEcu = this.optionsSorter('ecu_name', options);
     });
 
-    // this.filteredOptionsConfigDiagitems = this.optionsSorter(
-    //   'config_diagitem',
-    //   this.options
-    // );
-    // this.filteredOptionsOptionValuewrite = this.optionsSorter(
-    //   'option_valuewrite',
-    //   this.options
-    // );
-    (this.filteredOptionsOptionText = this.optionsSorter(
-      'Option_text',
-      this.options
-    )),
-      this.options;
-    this.filteredOptionsRoyaltyPartnr = this.optionsSorter(
-      'royalty_part_nr',
-      this.options
-    );
-    this.filteredOptionsDescriptionFr = this.optionsSorter(
-      'part_description_fr',
-      this.options
-    );
-    this.filteredOptionsDescriptionEn = this.optionsSorter(
-      'part_description_en',
-      this.options
-    );
-    this.filteredOptionsRoyaltyMtcScr = this.optionsSorter(
-      'royalty_mtc_scr',
-      this.options
-    );
-    this.filteredOptionsComment = this.optionsSorter('Comment', this.options);
+    this.partService.getRoyaltyPartNumbers().subscribe((options) => {
+      this.filteredOptionsRoyaltyPartnr = this.optionsSorter(
+        'royalty_part_nr',
+        options
+      );
+    });
   }
 
   onNoClick(): void {

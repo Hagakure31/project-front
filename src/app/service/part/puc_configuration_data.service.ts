@@ -13,6 +13,7 @@ export class PucConfigurationDataService {
   apiEcuNames = this.apiUrl + 'ecu_names/';
   apiConfigDiagitems = this.apiUrl + 'config_diagitems';
   apiOptionValueWrite = this.apiUrl + 'option_valuewrite';
+  apiOptionText = this.apiUrl + 'option_text';
 
   constructor(private http: HttpClient) {}
   getPucConfigurationData(): Observable<Puc_Configuration_Data[]> {
@@ -33,6 +34,20 @@ export class PucConfigurationDataService {
       .append('ecu_name', selectedEcu)
       .append('config_diagitem', selectedDiagitem);
     return this.http.get<string[]>(this.apiOptionValueWrite, {
+      params: params,
+    });
+  }
+
+  getOptionText(
+    selectedEcu,
+    selectedDiagitem,
+    selectedOptionValueWrite
+  ): Observable<any> {
+    const params = new HttpParams()
+      .append('ecu_name', selectedEcu)
+      .append('config_diagitem', selectedDiagitem)
+      .append('option_valuewrite', selectedOptionValueWrite);
+    return this.http.get<string[]>(this.apiOptionText, {
       params: params,
     });
   }

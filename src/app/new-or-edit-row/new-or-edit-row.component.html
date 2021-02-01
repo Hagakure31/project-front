@@ -56,7 +56,17 @@
       [matAutocomplete]="autoValueWrite"
       matInput
     />
-    <mat-autocomplete autoActiveFirstOption #autoValueWrite="matAutocomplete">
+    <mat-autocomplete
+      autoActiveFirstOption
+      #autoValueWrite="matAutocomplete"
+      (optionSelected)="
+        onOptionValuewriteSelected(
+          $event,
+          form.get('ecu_name').value,
+          form.get('config_diagitem').value
+        )
+      "
+    >
       <mat-option
         *ngFor="let option of filteredOptionsOptionValuewrite | async"
         [value]="option"
@@ -77,7 +87,7 @@
       [matAutocomplete]="autoOptionText"
       matInput
     />
-    />
+
     <mat-autocomplete autoActiveFirstOption #autoOptionText="matAutocomplete">
       <mat-option
         *ngFor="let option of filteredOptionsOptionText | async"
@@ -99,7 +109,11 @@
       [matAutocomplete]="autoPartNr"
       matInput
     />
-    <mat-autocomplete autoActiveFirstOption #autoPartNr="matAutocomplete">
+    <mat-autocomplete
+      autoActiveFirstOption
+      #autoPartNr="matAutocomplete"
+      (optionSelected)="onRoyaltyPartNrSelected($event)"
+    >
       <mat-option
         *ngFor="let option of filteredOptionsRoyaltyPartnr | async"
         [value]="option"
@@ -115,22 +129,7 @@
   <br />
   <mat-form-field>
     <mat-label>part_description_fr</mat-label>
-    <input
-      formControlName="part_description_fr"
-      [matAutocomplete]="autoFr"
-      matInput
-    />
-    <mat-autocomplete autoActiveFirstOption #autoFr="matAutocomplete">
-      <mat-option
-        *ngFor="let option of filteredOptionsDescriptionFr | async"
-        [value]="option"
-      >
-        {{ option }}
-      </mat-option>
-    </mat-autocomplete>
-    <mat-error *ngIf="form.get('part_description_fr').hasError('required')"
-      >Veuillez remplir le champ part_description_fr</mat-error
-    >
+    <input matInput formControlName="part_description_fr" />
   </mat-form-field>
 
   <br />
