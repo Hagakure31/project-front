@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="tableData | async" class="mat-elevation-z8">
+<table mat-table [dataSource]="tableData" class="mat-elevation-z8">
   <ng-container matColumnDef="ecu_name">
     <th mat-header-cell *matHeaderCellDef>ecu_name</th>
     <td mat-cell *matCellDef="let tableData">{{ tableData.ecu_name }}</td>
@@ -20,7 +20,9 @@
 
   <ng-container matColumnDef="option_text">
     <th mat-header-cell *matHeaderCellDef>Option_text</th>
-    <td mat-cell *matCellDef="let tableData">{{ tableData.option_text }}</td>
+    <td mat-cell *matCellDef="let tableData">
+      {{ tableData.puc.option_text }}
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="royalty_part_nr">
@@ -33,14 +35,14 @@
   <ng-container matColumnDef="part_description_fr">
     <th mat-header-cell *matHeaderCellDef>part_description_fr</th>
     <td mat-cell *matCellDef="let tableData">
-      {{ tableData.part_description_fr }}
+      {{ tableData.part.part_description_fr }}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="part_description_en">
     <th mat-header-cell *matHeaderCellDef>part_description_en</th>
     <td mat-cell *matCellDef="let tableData">
-      {{ tableData.part_description_en }}
+      {{ tableData.part.part_description_en }}
     </td>
   </ng-container>
 

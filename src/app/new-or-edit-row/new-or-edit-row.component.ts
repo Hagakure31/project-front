@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import {
@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { PucConfigurationDataService } from '../service/part/puc_configuration_data.service';
 import { PartService } from '../service/part/part.service';
+import { ReferentialConfigDiagitemService } from '../service/part/referential_config_diagitem.service';
+import { tableData } from 'src/tableData';
 
 @Component({
   selector: 'app-new-or-edit-row',
@@ -27,7 +29,6 @@ export class NewOrEditRowComponent implements OnInit {
   filteredOptionsDescriptionEn: Observable<string[]>;
   filteredOptionsRoyaltyMtcScr: Observable<string[]>;
   filteredOptionsComment: Observable<string[]>;
-
   ecu_names$: Observable<string[]>;
   previousState: any = {
     ecu_name: '',
@@ -76,14 +77,15 @@ export class NewOrEditRowComponent implements OnInit {
     ]),
     Comment: new FormControl('', [
       Validators.required,
-      Validators.maxLength(30),
+      Validators.maxLength(60),
     ]),
   });
 
   constructor(
     public dialogRef: MatDialogRef<NewOrEditRowComponent>,
     private pucConfigurationDataService: PucConfigurationDataService,
-    private partService: PartService
+    private partService: PartService,
+    private referentialConfigDiagitemService: ReferentialConfigDiagitemService
   ) {}
 
   private _filter(value: string, options: string[]): string[] {
@@ -183,6 +185,14 @@ export class NewOrEditRowComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close({ event: 'Cancel' });
+  }
+
+  onSubmit() {
+    this.referentialConfigDiagitemService
+      .postFormData(this.form.value)
+      .subscribe((data) =>
+        this.dialogRef.close({ event: 'Create', data: data })
+      );
   }
 }

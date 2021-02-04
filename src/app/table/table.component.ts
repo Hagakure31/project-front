@@ -23,8 +23,16 @@ export class TableComponent implements OnInit {
   ];
 
   constructor(private tableDataService: TableDataService) {}
-  tableData: Observable<tableData[]>;
+
+  tableData: tableData[];
+
+  createRow(data) {
+    this.tableData = [...this.tableData, data];
+  }
+
   ngOnInit(): void {
-    this.tableData = this.tableDataService.getTableData().pipe(share());
+    this.tableDataService.getTableData().subscribe((tableData) => {
+      this.tableData = tableData;
+    });
   }
 }
