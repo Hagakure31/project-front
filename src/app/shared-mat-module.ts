@@ -5,6 +5,9 @@ import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const matModule = [
   MatDialogModule,
@@ -13,6 +16,9 @@ const matModule = [
   MatTableModule,
   MatInputModule,
   MatAutocompleteModule,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatSnackBarModule,
 ];
 
 @NgModule({

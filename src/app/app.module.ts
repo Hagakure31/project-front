@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { NewOrEditRowComponent } from './new-or-edit-row/new-or-edit-row.component';
 import { MaterialModule } from './shared-mat-module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     NotFoundComponent,
     HomeComponent,
     NewOrEditRowComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

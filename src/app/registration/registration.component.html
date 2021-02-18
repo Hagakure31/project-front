@@ -1,1 +1,50 @@
-<p>registration works!</p>
+<app-navbar></app-navbar>
+<div id="title">
+  <h1 class="mat-display-1">Créer un compte</h1>
+  <!-- <h2 class="mat-h2">Vous avez déjà un compte ?</h2>
+  <a routerLink="/login">Log In</a> -->
+</div>
+<div id="formContainer" [formGroup]="registerForm" mat-dialog-content>
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input formControlName="email" matInput placeholder="email" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Nom d'utilisateur</mat-label>
+    <input
+      formControlName="username"
+      matInput
+      placeholder="Nom d'utilisateur"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Mot de passe</mat-label>
+    <input
+      type="password"
+      formControlName="password"
+      matInput
+      placeholder="mot de passe"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Confirmer mot de passe</mat-label>
+    <input
+      type="password"
+      formControlName="confirmPassword"
+      matInput
+      placeholder="mot de passe"
+    />
+  </mat-form-field>
+  <button
+    id="registerButton"
+    mat-flat-button
+    color="primary"
+    [disabled]="registerForm.invalid"
+    (click)="onSubmit()"
+  >
+    Sauvegarder
+  </button>
+</div>

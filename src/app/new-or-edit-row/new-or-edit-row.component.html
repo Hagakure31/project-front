@@ -195,21 +195,13 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Retour</button>
-  <button mat-button [disabled]="form.invalid" (click)="onSubmit()">
+  <button mat-flat-button color="warn" (click)="onNoClick()">Retour</button>
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="form.invalid"
+    (click)="onSubmit()"
+  >
     Sauvegarder
   </button>
 </div>
-
-<!-- <mat-form-field>
-  <mat-label>config_diagitem</mat-label>
-  <input formControlName="config_diagitem" [matAutocomplete]="auto" matInput />
-  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-      {{ option }}
-    </mat-option>
-  </mat-autocomplete>
-  <mat-error *ngIf="form.get('config_diagitem').hasError('required')"
-    >Veuillez remplir le champ config_diagitem</mat-error
-  >
-</mat-form-field> -->

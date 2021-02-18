@@ -1,0 +1,41 @@
+#title{
+    margin-top: 50px;
+    width: 80%;
+}
+h1{
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    
+}
+
+#formContainer {
+    
+    height: 500px;
+    width: 80%;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
+    
+}
+
+#infoMessage {
+    width: 100%;
+    align-self: flex-end;
+    text-align: center;
+}
+
+
+mat-form-field {
+    margin-left: 4rem;
+    width: 400px;
+}
+
+#registerButton{
+    margin: 7rem 0 0 4rem;
+    width: 400px;
+    align-self: flex-end;
+}
+
+
