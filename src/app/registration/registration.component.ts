@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -13,25 +19,7 @@ import { RegisterService } from '../service/part/register.service';
 export class RegistrationComponent implements OnInit {
   infoMessage: string = '';
 
-  registerForm: FormGroup = new FormGroup({
-    email: new FormControl('', [
-      Validators.email,
-      Validators.required,
-      Validators.maxLength(50),
-    ]),
-    username: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(30),
-    ]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-    ]),
-    confirmPassword: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-    ]),
-  });
+  public registerForm: FormGroup;
 
   constructor(
     private registerService: RegisterService,
@@ -39,7 +27,40 @@ export class RegistrationComponent implements OnInit {
     private snackbar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const password = new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]);
+
+    this.registerForm = new FormGroup({
+      email: new FormControl('', [
+        Validators.email,
+        Validators.required,
+        Validators.maxLength(50),
+      ]),
+      username: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(30),
+      ]),
+      password: password,
+      confirmPassword: new FormControl('', [
+        Validators.compose([
+          Validators.required,
+          this.passwordMatchValidator(password),
+        ]),
+      ]),
+    });
+  }
+
+  public passwordMatchValidator(controlPassword: AbstractControl): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const password: string = controlPassword.value;
+      const confirmPassword: string = control.value;
+
+      return password !== confirmPassword ? { NoPassswordMatch: true } : null;
+    };
+  }
 
   onSubmit() {
     const form = {
@@ -47,7 +68,7 @@ export class RegistrationComponent implements OnInit {
       username: this.registerForm.get('username').value,
       password: this.registerForm.get('password').value,
     };
-    console.log(form);
+
     this.registerService.postRegisterForm(form).subscribe((response) => {
       if (response.boolean === true) {
         this.infoMessage = 'Compte crée avec succès. Veuillez vous connecter.';

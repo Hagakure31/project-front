@@ -1,1 +1,33 @@
-<p>login works!</p>
+<app-navbar></app-navbar>
+<div id="title">
+  <h1 class="mat-display-1">Se connecter</h1>
+
+  <h2 class="mat-h2">Vous n'avez encore de compte ?</h2>
+  <a routerLink="/register">S'enregistrer</a>
+</div>
+<div id="formContainer" [formGroup]="loginForm" mat-dialog-content>
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input formControlName="email" matInput placeholder="email" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Mot de passe</mat-label>
+    <input
+      type="password"
+      formControlName="password"
+      matInput
+      placeholder="Nom d'utilisateur"
+    />
+  </mat-form-field>
+
+  <button
+    id="loginButton"
+    mat-flat-button
+    color="primary"
+    [disabled]="loginForm.invalid"
+    (click)="onSubmit()"
+  >
+    Log In
+  </button>
+</div>
